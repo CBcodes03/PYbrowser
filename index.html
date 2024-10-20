@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to PYbrowser</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script>
+        var searchEngineUrl = "https://www.google.com/search?q="; // Default search engine
+    
+        function updateSearchEngine() {
+            var searchEngineSelect = document.getElementById("searchEngine");
+            var selectedEngine = searchEngineSelect.value;
+    
+            switch (selectedEngine) {
+                case "google":
+                    searchEngineUrl = "https://www.google.com/search?q=";
+                    break;
+                case "bing":
+                    searchEngineUrl = "https://www.bing.com/search?q=";
+                    break;
+                case "duckduckgo":
+                    searchEngineUrl = "https://duckduckgo.com/?q=";
+                    break;
+                case "yahoo":
+                    searchEngineUrl = "https://search.yahoo.com/search?p=";
+                    break;
+                case "yandex":
+                    searchEngineUrl = "https://yandex.com/search/?text=";
+                    break;
+                case "baidu":
+                    searchEngineUrl = "https://www.baidu.com/s?wd=";
+                    break;
+                case "ecosia":
+                    searchEngineUrl = "https://www.ecosia.org/search?q=";
+                    break;
+                case "ask":
+                    searchEngineUrl = "https://www.ask.com/web?q=";
+                    break;
+                default:
+                    searchEngineUrl = "https://www.google.com/search?q="; // Fallback to Google
+            }
+        }
+    
+        function performSearch() {
+            var query = document.getElementById("searchQuery").value;
+            if (query) {
+                var dynamicLink = document.getElementById("dynamicLink");
+                // Set the href to the selected search engine URL with the query
+                dynamicLink.href = searchEngineUrl + encodeURIComponent(query);
+                // Click the anchor tag to perform the search
+                dynamicLink.click();
+            }
+        }
+    
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        }
+    </script>    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1c1c1c, #111111);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #f3f3f3;
+            letter-spacing: 3px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .logo span {
+            color: #00d4ff;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: #f3f3f3;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #00d4ff;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 100px);
+            text-align: center;
+            padding: 0 20px;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .hero-title {
+            font-size: 4em;
+            color: #fff;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5em;
+            color: #e0e0e0;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #00d4ff;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #00a9cc;
+            transform: scale(1.05);
+        }
+
+        /* Search bar styling */
+        .search-bar {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-bar input {
+            width: 400px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+            background-color: #a1a1a1;
+            color: #fff;
+        }
+
+        .search-bar button {
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: none;
+            background-color: #00d4ff;
+            color: #fff;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #00a9cc;
+        }
+
+        section {
+            padding: 80px 50px;
+        }
+
+        section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #00d4ff;
+            text-align: center;
+        }
+
+        section p {
+            font-size: 1.2em;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        .social-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .social-links a {
+            color: #f3f3f3;
+            margin: 0 10px;
+            font-size: 1.8em;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #00d4ff;
+        }
+
+        footer {
+            background-color: #111111;
+            padding: 40px 0;
+            text-align: center;
+            color: #e0e0e0;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: rotate(45deg) translateY(0); }
+            50% { transform: rotate(45deg) translateY(10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">PY<span>browser</span></h1>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1 class="hero-title">Fast. Secure. Innovative.</h1>
+            <p class="hero-subtitle">Experience the future of browsing with PYbrowser.</p>
+            <select id="searchEngine" class="btn" onchange="updateSearchEngine()">
+                <option value="google">Google</option>
+                <option value="bing">Bing</option>
+                <option value="duckduckgo">DuckDuckGo</option>
+                <option value="yahoo">Yahoo</option>
+                <option value="yandex">Yandex</option>
+                <option value="baidu">Baidu</option>
+                <option value="ecosia">Ecosia</option>
+                <option value="ask">Ask</option>
+            </select>
+
+            <!-- Search bar added below the Get Started button -->
+            <div class="search-bar">
+                <input type="text" id="searchQuery" placeholder="Search the web..." onkeypress="handleKeyPress(event)">
+                <button type="button" onclick="performSearch()">Search</button>
+            </div>
+
+            <!-- Hidden anchor tag for performing search -->
+            <a id="dynamicLink" href="#" style="display:none;"></a>
+        </section>
+
+        <section id="features">
+            <h2>Features</h2>
+            <p>MyWebBrowser offers a range of features designed for modern web users, including ad-blocking, advanced security measures, and lightning-fast performance.</p>
+        </section>
+
+        <section id="about">
+            <h2>About Us</h2>
+            <p>At MyWebBrowser, we are committed to delivering a superior browsing experience. Our team of developers and designers continually work to innovate and ensure that our browser meets the needs of our users.</p>
+        </section>
+
+        <footer id="contact">
+            <h2>Contact Us</h2>
+            <p>Have questions or feedback? We would love to hear from you. Reach out to us at <a href="mailto:contact@mywebbrowser.com">contact@mywebbrowser.com</a>.</p>
+
+            <div class="social-links">
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+
+            <p>&copy; PYbrowser. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
