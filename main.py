@@ -117,7 +117,7 @@ class MainWindow(QMainWindow):
         self.tabs.tabCloseRequested.connect(self.close_current_tab)
 
         self.add_new_tab()
-
+        self.history = []
         self.setCentralWidget(self.tabs)
 
         # Creating a status bar object
@@ -326,9 +326,9 @@ class MainWindow(QMainWindow):
         # Append the new bookmark to the bookmarks.txt file
         bookmark_file = "bookmarks.txt"
         with open(bookmark_file, 'a') as f:
-            f.write(f"{title} \n {current_url}")  # Write the title and URL separated by '|'
-        
+            f.write(f"{title}^-^{current_url}\n")  # Write the title and URL on the same line separated by '^-^'
         QMessageBox.information(self, "Bookmark Added", f"'{title}' has been bookmarked.")
+
 
     def load_bookmarks(self):
         # Load bookmarks from the bookmarks.txt file
@@ -338,9 +338,14 @@ class MainWindow(QMainWindow):
         if os.path.exists(bookmark_file):
             with open(bookmark_file, 'r') as f:
                 for line in f:
-                    if line.strip():  # Ignore empty lines
-                        title, url = line.strip().split('\n')
-                        self.bookmarks.append((title, url))
+                    line = line.strip()
+                    if line:  # Ignore empty lines
+                        parts = line.split('^-^')
+                        if len(parts) == 2:
+                            title, url = parts
+                            self.bookmarks.append((title, url))
+                        else:
+                            print(f"Skipped invalid bookmark line: {line}")
 
     def show_bookmarks(self):
         self.load_bookmarks()  # Load bookmarks from file before displaying
@@ -457,7 +462,8 @@ class MainWindow(QMainWindow):
 
                 # Display title and URL with clickable link
                 history_item = QLabel(f"<a href='{url}'>{title}</a> ({timestamp})")
-                history_item.setOpenExternalLinks(True)
+                history_item.setOpenExternalLinks(False)
+                history_item.linkActivated.connect(lambda link=url: self.navigate_to_url(link))
                 history_item_layout.addWidget(history_item)
 
                 # Add "Delete" button for each history entry
