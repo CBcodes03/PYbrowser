@@ -1,1 +1,2 @@
-2024-10-25 00:15:12 | https://www.google.com/search?q=hello | https://www.google.com/search?q=hello
+2024-10-25 00:53:34 | Welcome to PYbrowser | https://duckduckgo.com/?q=bonjor&ia=web
+2024-10-25 00:53:37 | bonjor at DuckDuckGo | https://www.bing.com/search?q=hi
