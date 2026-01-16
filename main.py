@@ -11,13 +11,19 @@ import sys
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWebEngineCore import QWebEngineUrlRequestInterceptor
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
+from urllib.parse import urlparse, parse_qs, unquote
 
 SEARCH_ENGINE=None
-def extract_domain_label(url):
-    parsed_url = urlparse(url)
-    domain = parsed_url.netloc
-    if domain.startswith('www.'):
-        domain = domain[4:]
+def extract_domain_label(url, page_title=None):
+    parsed = urlparse(url)
+    domain = parsed.netloc.replace("www.", "")
+    if page_title:
+        return page_title[:25]
+    query = parse_qs(parsed.query)
+
+    for key in ["q", "search", "query"]:
+        if key in query:
+            return unquote(query[key][0])[:25]
     return domain
 dark_theme = """
     QMainWindow {
@@ -214,7 +220,7 @@ class MainWindow(QMainWindow):
             new_tab.setUrl(QUrl("file:///home/chirag/Desktop/PYbrowser/index.html"))
 
         # Connect the urlChanged signal to update the URL bar and title
-        new_tab.urlChanged.connect(lambda q: self.update_urlbar(q, new_tab))
+        new_tab.urlChanged.connect(lambda q: self.update_urlbar(q))
         new_tab.urlChanged.connect(self.add_to_history)
         new_tab.urlChanged.connect(self.handle_url_change)
 
@@ -225,7 +231,7 @@ class MainWindow(QMainWindow):
         # Set the initial tab's title
         self.tabs.setTabText(index, label)
 
-    def update_urlbar(self, q, tab):
+    def update_urlbar(self, q):
         self.urlbar.setText(q.toString())
         self.urlbar.setCursorPosition(0)
         self.update_tab_title(q)
@@ -248,7 +254,7 @@ class MainWindow(QMainWindow):
             url_string = qurl.toString()
             label = re.search(r'[^/]+$', url_string)
             print(label)
-        self.tabs.setTabText(current_index, str(label.group()))
+        self.tabs.setTabText(current_index, str(label))
 
 
     def close_current_tab(self, index):
@@ -522,6 +528,7 @@ class MainWindow(QMainWindow):
     def apply_light_theme(self):
         self.setStyleSheet(light_theme)
         self.is_dark_mode = False
+    
 app = QApplication(sys.argv)
 app.setApplicationName("PYbrowser")
 
