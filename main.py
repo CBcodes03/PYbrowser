@@ -12,6 +12,16 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtWebEngineCore import QWebEngineUrlRequestInterceptor
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from urllib.parse import urlparse, parse_qs, unquote
+import psutil
+import os
+
+def get_memory_usage():
+    process = psutil.Process(os.getpid())
+    mem = process.memory_info().rss / (1024 * 1024)
+    return f"{mem:.2f} MB"
+
+print("Memory usage:", get_memory_usage())
+
 
 SEARCH_ENGINE=None
 def extract_domain_label(url, page_title=None):
